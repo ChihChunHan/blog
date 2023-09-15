@@ -3,8 +3,8 @@
     "vitepress": "^1.0.0-rc.13"
   },
   "scripts": {
-    "docs:dev": "vitepress dev blog",
-    "docs:build": "vitepress build blog",
-    "docs:preview": "vitepress preview blog"
+    "docs:dev": "vitepress dev posts",
+    "docs:build": "vitepress build posts",
+    "docs:preview": "vitepress preview posts"
   }
 }
