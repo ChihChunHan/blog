@@ -1,3 +1,7 @@
+---
+sidebar: false
+---
+
 # 用 vitepress 快速幫專案建立文件
 
 ## 為什麼要用 vitepress
