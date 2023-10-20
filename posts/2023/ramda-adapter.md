@@ -20,8 +20,7 @@ sidebar: false
 }
 ```
 
-
-如果想要在處理資料的時候有前端自己的預設值，或是想要將資料格式統一，這時候就可以使用 ramda 來幫助我們。
+我們的首要任務是在處理資料的時候讓規格有自己的預設值，或是想要將資料格式統一，這時候就可以使用 ramda 來幫助我們。
 
 ### 製作第一個轉接器
 
@@ -98,6 +97,8 @@ const toGeneralProduct =
 
 ### 混合第一個轉接器，衍伸第二個轉接器
 
+這裡會用到一個新的 ramda 方法 [pipe](https://ramdajs.com/docs/#pipe) 來幫助我們串接多個函式。
+
 ```js
 import R from 'ramda'
 /* ... */
@@ -113,11 +114,12 @@ const toGeneralProduct =
 
 
 // 準備要新增的擴充欄位轉接器
-const toStudentDiscountDetail = 
-  R.applySpec({
+const studentDiscountSpec = {
   discount: getDiscount,
   description: getDescription,
-})
+}
+
+const toStudentDiscountDetail = R.applySpec(studentDiscountSpec)
 
 // 將兩個轉接器合併
 const toGeneralProductWithStudentDiscount = 
@@ -155,7 +157,7 @@ console.log(toGeneralProductWithStudentDiscount({}))
   "price": 35000,
   "description": "我是合購方案，買兩個商品更優惠",
   // 新增的部分
-  "content": [
+  "contents": [
     {
       "name": "iphone15 pro",
       "price": 30000,
@@ -170,7 +172,7 @@ console.log(toGeneralProductWithStudentDiscount({}))
 }
 ```
 
-此時先不要急著改寫，可以先觀察一下，這個資料跟之前的資料有些許相似，但是又有些許不同，這時候可以先想想，有哪些地方可以重複利用呢？
+此時如法泡製，繼續利用規格擴充的方式來處理。
 
 ### 混合第一個轉接器，衍伸第三個轉接器
 
@@ -184,18 +186,21 @@ const getContent = R.propOr([], 'content')
 /* ... */
 
 // 準備要新增的擴充欄位轉接器
+
+const packageContentSpec = {
+  name: getName,
+  price: getPrice,
+  description: getDescription,
+}
+
 const toPackageContentForList = R.map(
-  R.applySpec({
-    name: getName,
-    price: getPrice,
-    description: getDescription,
-  })
+  R.applySpec(packageContentSpec)
 )
 
 // 將兩個規格合併
 const toPackageProduct = R.applySpec({
   ...generalProductSpec,
-  content: R.pipe(getContent, toPackageContentForList),
+  contents: R.pipe(getContent, toPackageContentForList),
 })
 
 console.log(toPackageProduct({}))
@@ -206,7 +211,7 @@ console.log(toPackageProduct({}))
   name: '',
   price: 0,
   description: '',
-  content: []
+  contents: []
 }
 */
 ```
@@ -236,7 +241,15 @@ export const toProduct = product => {
 
 最終不管後端傳來什麼樣的型態的商品，這個轉接器都可以將資料轉換成我們想要的格式。
 
-## coding style : functional programming vs mixin
+## 總結
+使用 ramda 的 applySpec 來建立規格有幾點好處：
+1. 可以將規格抽出來，方便維護
+2. 可以將規格當作是文件，方便對照
+3. 可以將規格當作是轉接器，方便擴充
+4. 當規格異動時，只需要修改規格，不需要修改轉接器
+5. 當前後端規格不同時，頁面不會直接報錯，而是會有預設值
+
+## bonus: coding style : functional programming vs mixin
 
 ramda 提供了很多 functional programming 的函式，可以自由選擇想要使用哪一種方法：
 
@@ -335,11 +348,12 @@ const toGeneralProduct =
 
 // type 2
 
-const toStudentDiscountDetail = 
-  R.applySpec({
+const studentDiscountSpec = {
   discount: getDiscount,
   description: getDescription,
-})
+}
+
+const toStudentDiscountDetail = R.applySpec(studentDiscountSpec)
 
 const toGeneralProductWithStudentDiscount = 
   R.applySpec({
@@ -353,21 +367,21 @@ const toGeneralProductWithStudentDiscount =
 
 // type 3
 
+const packageContentSpec = {
+  name: getName,
+  price: getPrice,
+  description: getDescription,
+}
+
 const toPackageContentForList = R.map(
-  R.applySpec({
-    name: getName,
-    price: getPrice,
-    description: getDescription,
-  })
+  R.applySpec(packageContentSpec)
 )
 
 const toPackageProduct = R.applySpec({
   ...generalProductSpec,
-  content: R.pipe(
-    getContent,
-    toPackageContentForList
-  ),
+  contents: R.pipe(getContent, toPackageContentForList),
 })
+
 
 export const toProduct = product => {
   if(getType(product) === 1) {
