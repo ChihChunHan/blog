@@ -4,7 +4,7 @@
   },
   "scripts": {
     "docs:dev": "vitepress dev posts",
-    "docs:build": "vitepress build posts --outDir dist",
+    "docs:build": "vitepress build posts",
     "docs:preview": "vitepress preview posts"
   }
 }
