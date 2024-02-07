@@ -1,8 +1,10 @@
 ---
 sidebar: false
+lastUpdated: 2023-09-15
+title: 用 vitepress 快速幫專案建立文件
 ---
 
-# 用 vitepress 快速幫專案建立文件
+# {{ $frontmatter.title }}
 
 ## 為什麼要用 vitepress
 

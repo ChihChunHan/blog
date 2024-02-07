@@ -1,8 +1,10 @@
 ---
 sidebar: false
+lastUpdated: 2023-11-28
+title: vercel 上線最速傳說 - serverless fullstack web site
 ---
 
-# vercel 上線最速傳說 - serverless fullstack web site
+# {{ $frontmatter.title }}
 
 ## 我們的目標產出
 1. 一個在前後端分離的環境下，有現代前端框架與 serverless 後端運算 data base 的網站。

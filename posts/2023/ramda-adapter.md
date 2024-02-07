@@ -1,8 +1,10 @@
 ---
 sidebar: false
+lastUpdated: 2023-10-20
+title: 使用 ramda 的 applySpec 製作轉接器來初始化資料
 ---
 
-# 使用 ramda 的 applySpec 製作轉接器來初始化資料
+# {{ $frontmatter.title }}
 
 ## 在開始之前
 

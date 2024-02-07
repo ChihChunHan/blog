@@ -5,7 +5,7 @@ export default defineConfig({
   title: "hanc blog",
   description: "hanc f2e tech blog",
   themeConfig: {
-    siteTitle: false,
+    // siteTitle: false,
     nav: [],
     sidebar: [],
     socialLinks: [
