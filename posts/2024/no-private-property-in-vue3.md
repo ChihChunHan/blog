@@ -115,3 +115,7 @@ console.log(proxy.secret); // [REDACTED]
 > In general, we recommend using plain objects over class instances as data sources. If you really need encapsulation and only expose certain reactive state, consider using Composition API and using [Composables](https://vuejs.org/guide/reusability/composables.html).
 
 總結來說，vue3 的 reactivity system 並沒有辦法處理 private class fields，如果真的有封裝的需求，evan 推薦使用 Composition API 和 Composables。
+
+::: tip
+3/20 更新 vue3 裡面 computed 可以處理 private class fields！
+:::
